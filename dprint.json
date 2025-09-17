@@ -1,0 +1,15 @@
+{
+  "typescript": {
+    "lineWidth": 100,
+    "indentWidth": 2,
+    "useTabs": false,
+    "semiColons": "always",
+    "quoteStyle": "alwaysDouble",
+    "newLineKind": "lf"
+  },
+  "json": {
+    "indentWidth": 2
+  },
+  "includes": ["**/*.{ts,tsx,js,jsx,json}"],
+  "excludes": ["node_modules", "dist"]
+}
