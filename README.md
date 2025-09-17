@@ -1,6 +1,6 @@
 # Cipher Twitch Overlay
 
-A responsive, animated Twitch streaming overlay designed for ultrawide monitors (3440x1440) with voice-reactive features.
+Responsive, animated Twitch streaming overlay designed for ultrawide monitors (3440x1440) with voice-reactive features
 
 ## Features
 
@@ -24,24 +24,24 @@ A responsive, animated Twitch streaming overlay designed for ultrawide monitors 
 ## Setup
 
 1. Install dependencies:
-\`\`\`bash
+```bash
 bun install
-\`\`\`
+```
 
 2. Start development server:
-\`\`\`bash
+```bash
 bun run dev
-\`\`\`
+```
 
 3. Build for production:
-\`\`\`bash
+```bash
 bun run build
-\`\`\`
+```
 
 4. Format code:
-\`\`\`bash
+```bash
 bun run format
-\`\`\`
+```
 
 ## Usage in OBS
 
