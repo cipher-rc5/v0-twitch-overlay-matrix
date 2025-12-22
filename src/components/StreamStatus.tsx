@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { useState, useEffect } from "react"
 
@@ -80,7 +79,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           z-index: 20;
           animation: slideInFromCenter 2s ease-out;
         }
-        
+
         .status-label {
           color: #ffffff;
           font-family: 'Terminess', 'Courier New', monospace;
@@ -90,7 +89,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           animation: fadeInUp 1.5s ease-out 0.5s both;
           text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
-        
+
         .status-text {
           font-family: 'Terminess', 'Courier New', monospace;
           font-size: 48px;
@@ -101,12 +100,12 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           text-shadow: 0 0 20px currentColor;
           position: relative;
         }
-        
+
         .status-cursor {
           animation: blink 1s infinite;
           color: #ffff00;
         }
-        
+
         .website {
           color: #888888;
           font-family: 'Terminess', 'Courier New', monospace;
@@ -115,12 +114,12 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           animation: fadeInUp 1.5s ease-out 1s both;
           transition: color 0.3s ease;
         }
-        
+
         .website:hover {
           color: #ffff00;
           text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
         }
-        
+
         .matrix-bg {
           position: absolute;
           top: -100px;
@@ -131,7 +130,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           opacity: 0.1;
           z-index: -1;
         }
-        
+
         .matrix-char {
           position: absolute;
           color: #ffff00;
@@ -139,7 +138,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           font-size: 14px;
           animation: matrixFall 3s linear infinite;
         }
-        
+
         ${[...Array(20)]
           .map(
             (_, i) => `
@@ -151,7 +150,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
         `,
           )
           .join("")}
-        
+
         @keyframes slideInFromCenter {
           from {
             opacity: 0;
@@ -162,7 +161,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
             transform: translate(-50%, -50%) scale(1);
           }
         }
-        
+
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -173,34 +172,34 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
             transform: translateY(0);
           }
         }
-        
+
         @keyframes livePulse {
-          0%, 100% { 
-            opacity: 1; 
+          0%, 100% {
+            opacity: 1;
             transform: scale(1);
             text-shadow: 0 0 20px currentColor;
           }
-          50% { 
-            opacity: 0.8; 
+          50% {
+            opacity: 0.8;
             transform: scale(1.05);
             text-shadow: 0 0 30px currentColor, 0 0 40px currentColor;
           }
         }
-        
+
         @keyframes statusGlow {
-          0%, 100% { 
+          0%, 100% {
             text-shadow: 0 0 20px currentColor;
           }
-          50% { 
+          50% {
             text-shadow: 0 0 30px currentColor, 0 0 40px currentColor;
           }
         }
-        
+
         @keyframes blink {
           0%, 50% { opacity: 1; }
           51%, 100% { opacity: 0; }
         }
-        
+
         @keyframes matrixFall {
           0% {
             transform: translateY(-100px);
@@ -217,31 +216,31 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
             opacity: 0;
           }
         }
-        
+
         /* Responsive Design */
         @media (max-width: 2560px) {
           .status-label {
             font-size: 20px;
           }
-          
+
           .status-text {
             font-size: 40px;
           }
-          
+
           .website {
             font-size: 16px;
           }
         }
-        
+
         @media (max-width: 1920px) {
           .status-label {
             font-size: 18px;
           }
-          
+
           .status-text {
             font-size: 32px;
           }
-          
+
           .website {
             font-size: 14px;
           }

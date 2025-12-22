@@ -1,4 +1,4 @@
-# Cipher Twitch Overlay
+# v0 Twitch Overlay
 
 Responsive, animated Twitch streaming overlay designed for ultrawide monitors (3440x1440) with voice-reactive features
 

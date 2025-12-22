@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { useState, useEffect } from "react"
 import CornerBrackets from "./CornerBrackets"
@@ -63,7 +62,7 @@ const StreamOverlay: React.FC = () => {
           /* Added responsive scaling with smooth transitions */
           transition: transform 0.3s ease;
         }
-        
+
         /* Enhanced responsive breakpoints for ultrawide support */
         @media (max-width: 3440px) and (min-width: 2560px) {
           .overlay-container {
@@ -73,7 +72,7 @@ const StreamOverlay: React.FC = () => {
             transform: scale(calc(100vw / 3440));
           }
         }
-        
+
         @media (max-width: 2560px) and (min-width: 1920px) {
           .overlay-container {
             width: 100vw;
@@ -82,7 +81,7 @@ const StreamOverlay: React.FC = () => {
             transform: scale(calc(100vw / 3440));
           }
         }
-        
+
         @media (max-width: 1920px) {
           .overlay-container {
             width: 100vw;
@@ -91,7 +90,7 @@ const StreamOverlay: React.FC = () => {
             transform: scale(calc(100vw / 3440));
           }
         }
-        
+
         /* Added mobile support */
         @media (max-width: 768px) {
           .overlay-container {

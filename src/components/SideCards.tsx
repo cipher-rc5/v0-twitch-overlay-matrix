@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { useState } from "react"
 
@@ -50,7 +49,7 @@ const SideCards: React.FC = () => {
           z-index: 15;
           animation: slideInFromLeft 2s ease-out 0.5s both;
         }
-        
+
         .card {
           background: rgba(0, 0, 0, 0.9);
           border: 2px solid #ffff00;
@@ -65,34 +64,34 @@ const SideCards: React.FC = () => {
           backdrop-filter: blur(10px);
           box-shadow: 0 4px 20px rgba(255, 255, 0, 0.1);
         }
-        
+
         .card:hover,
         .card.hovered {
           background: rgba(255, 255, 0, 0.15);
           transform: translateX(15px) scale(1.05);
-          box-shadow: 
+          box-shadow:
             0 8px 30px rgba(255, 255, 0, 0.3),
             inset 0 0 20px rgba(255, 255, 0, 0.1);
           border-color: #ffff88;
         }
-        
+
         .card-icon {
           display: flex;
           align-items: center;
           justify-content: center;
           transition: all 0.3s ease;
         }
-        
+
         /* Removed rotation animation on hover */
         .card:hover .card-icon,
         .card.hovered .card-icon {
           transform: scale(1.1);
         }
-        
+
         .card-icon svg {
           filter: drop-shadow(0 0 5px rgba(255, 255, 0, 0.5));
         }
-        
+
         .card-text {
           color: #ffffff;
           font-family: 'Terminess', 'Courier New', monospace;
@@ -102,13 +101,13 @@ const SideCards: React.FC = () => {
           text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
           transition: all 0.3s ease;
         }
-        
+
         .card:hover .card-text,
         .card.hovered .card-text {
           color: #ffff00;
           text-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
         }
-        
+
         .card-border-effect {
           position: absolute;
           top: 0;
@@ -123,42 +122,42 @@ const SideCards: React.FC = () => {
           );
           transition: left 0.6s ease;
         }
-        
+
         .card:hover .card-border-effect,
         .card.hovered .card-border-effect {
           left: 100%;
         }
-        
+
         /* Responsive Design */
         @media (max-width: 2560px) {
           .side-cards {
             left: 50px;
           }
-          
+
           .card {
             width: 180px;
             padding: 18px;
           }
-          
+
           .card-text {
             font-size: 14px;
           }
         }
-        
+
         @media (max-width: 1920px) {
           .side-cards {
             left: 40px;
           }
-          
+
           .card {
             width: 160px;
             padding: 15px;
           }
-          
+
           .card-text {
             font-size: 12px;
           }
-          
+
           .card-icon svg {
             width: 20px;
             height: 20px;

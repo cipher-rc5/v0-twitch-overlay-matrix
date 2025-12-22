@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { useVoiceActivity } from "../hooks/useVoiceActivity"
 
@@ -91,7 +90,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           align-items: center;
           gap: 20px;
         }
-        
+
         .amplitude-visualization {
           display: flex;
           flex-direction: column;
@@ -105,7 +104,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           /* Reduced glow effect from 20px to 8px */
           box-shadow: 0 0 8px rgba(255, 255, 0, 0.2);
         }
-        
+
         .amplitude-bars {
           display: flex;
           gap: 3px;
@@ -116,7 +115,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           /* Added padding to ensure bars don't touch edges */
           padding: 0 5px;
         }
-        
+
         .amplitude-bar {
           width: 3px;
           background: #ffff00;
@@ -129,7 +128,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           /* Added subtle border to make individual bars more distinct */
           border: 1px solid rgba(255, 255, 0, 0.3);
         }
-        
+
         .amplitude-level {
           font-family: 'Terminess', 'Courier New', monospace;
           font-size: 12px;
@@ -139,14 +138,14 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           /* Reduced text glow effect from 10px to 5px */
           text-shadow: 0 0 5px rgba(255, 255, 0, 0.6);
         }
-        
+
         .avatar-section {
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 15px;
         }
-        
+
         .live-button {
           background: rgba(0, 0, 0, 0.9);
           border: 2px solid #ffff00;
@@ -163,14 +162,14 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           /* Further reduced text glow effect from 5px to 3px */
           text-shadow: 0 0 3px rgba(255, 255, 0, 0.4);
           /* Further reduced box glow effects */
-          box-shadow: 
+          box-shadow:
             0 0 5px rgba(255, 255, 0, 0.15),
             inset 0 0 3px rgba(255, 255, 0, 0.08);
           backdrop-filter: blur(10px);
           animation: liveButtonGlow 2s ease-in-out infinite alternate;
           width: 100%;
         }
-        
+
         .live-dot {
           width: 10px;
           height: 10px;
@@ -180,7 +179,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           /* Reduced dot glow effect from 10px to 5px */
           box-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
         }
-        
+
         .avatar-container {
           position: relative;
           width: 220px;
@@ -190,23 +189,23 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           /* Reduced container glow effects */
-          box-shadow: 
+          box-shadow:
             0 0 10px rgba(255, 255, 0, 0.2),
             inset 0 0 10px rgba(255, 255, 0, 0.05);
           backdrop-filter: blur(5px);
         }
-        
+
         .avatar-container.voice-active {
           border-color: #ffff88;
           /* Reduced active glow effects and made movement more subtle */
-          box-shadow: 
+          box-shadow:
             0 0 15px rgba(255, 255, 0, 0.4),
             0 0 25px rgba(255, 255, 0, 0.2),
             inset 0 0 15px rgba(255, 255, 0, 0.1);
           /* Made scaling and rotation more subtle */
           transform: scale(1.02) rotate(0.5deg);
         }
-        
+
         .avatar-image {
           width: 100%;
           height: 100%;
@@ -215,7 +214,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           filter: ${isVoiceActive ? "brightness(1.1) contrast(1.05) saturate(1.05)" : "brightness(1)"};
           transition: filter 0.3s ease;
         }
-        
+
         .voice-ring {
           position: absolute;
           top: -10px;
@@ -227,11 +226,11 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           opacity: 0;
           transition: opacity 0.3s ease;
         }
-        
+
         .voice-ring.active {
           opacity: 1;
         }
-        
+
         .ring-pulse {
           position: absolute;
           top: 0;
@@ -242,7 +241,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           border-radius: 20px;
           animation: ringPulse 1s ease-out infinite;
         }
-        
+
         .avatar-corners {
           position: absolute;
           top: 0;
@@ -251,7 +250,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           bottom: 0;
           pointer-events: none;
         }
-        
+
         .corner-accent {
           position: absolute;
           width: 15px;
@@ -259,41 +258,41 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           border: 2px solid #ffff00;
           transition: all 0.3s ease;
         }
-        
+
         .corner-accent.top-left {
           top: 10px;
           left: 10px;
           border-right: none;
           border-bottom: none;
         }
-        
+
         .corner-accent.top-right {
           top: 10px;
           right: 10px;
           border-left: none;
           border-bottom: none;
         }
-        
+
         .corner-accent.bottom-left {
           bottom: 10px;
           left: 10px;
           border-right: none;
           border-top: none;
         }
-        
+
         .corner-accent.bottom-right {
           bottom: 10px;
           right: 10px;
           border-left: none;
           border-top: none;
         }
-        
+
         .avatar-container.voice-active .corner-accent {
           border-color: #ffff88;
           /* Reduced corner accent glow effect */
           box-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
         }
-        
+
         .status-text {
           font-family: 'Terminess', 'Courier New', monospace;
           font-size: 12px;
@@ -305,7 +304,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           text-shadow: 0 0 5px currentColor;
           text-align: center;
         }
-        
+
         @keyframes slideInFromRight {
           from {
             opacity: 0;
@@ -316,7 +315,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
             transform: translateX(0);
           }
         }
-        
+
         @keyframes fadeInScale {
           from {
             opacity: 0;
@@ -327,80 +326,80 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
             transform: scale(1);
           }
         }
-        
+
         @keyframes amplitudeBar {
           0% { height: 20%; opacity: 0.7; }
           100% { height: 100%; opacity: 1; }
         }
-        
+
         @keyframes ringPulse {
-          0% { 
-            transform: scale(1); 
-            opacity: 0.8; 
+          0% {
+            transform: scale(1);
+            opacity: 0.8;
           }
-          100% { 
-            transform: scale(1.3); 
-            opacity: 0; 
+          100% {
+            transform: scale(1.3);
+            opacity: 0;
           }
         }
-        
+
         /* Reduced LIVE button glow animation intensity */
         @keyframes liveButtonGlow {
-          0% { 
-            box-shadow: 
+          0% {
+            box-shadow:
               0 0 5px rgba(255, 255, 0, 0.15),
               inset 0 0 3px rgba(255, 255, 0, 0.08);
           }
-          100% { 
-            box-shadow: 
+          100% {
+            box-shadow:
               0 0 8px rgba(255, 255, 0, 0.2),
               inset 0 0 5px rgba(255, 255, 0, 0.12);
           }
         }
-        
+
         /* Reduced live dot pulse glow effect */
         @keyframes liveDotPulse {
-          0%, 100% { 
-            opacity: 1; 
+          0%, 100% {
+            opacity: 1;
             transform: scale(1);
             box-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
           }
-          50% { 
-            opacity: 0.6; 
+          50% {
+            opacity: 0.6;
             transform: scale(1.3);
             box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
           }
         }
-        
+
         /* Responsive Design */
         @media (max-width: 2560px) {
           .voice-avatar {
             bottom: 50px;
             right: 70px;
           }
-          
+
           .avatar-container {
             width: 200px;
             height: 200px;
           }
-          
+
           .amplitude-bars {
             /* Updated responsive width to match new container size */
             width: 240px;
           }
         }
-        
+
         @media (max-width: 1920px) {
           .voice-avatar {
             bottom: 40px;
             right: 60px;
           }
-          
+
           .avatar-container {
             width: 180px;
             height: 180px;
           }
-          
+
           .amplitude-bars {
             /* Updated responsive width to match new container size */
             width: 200px;
@@ -410,7 +409,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
             font-size: 12px;
             padding: 6px 12px;
           }
-          
+
           .status-text {
             font-size: 10px;
           }

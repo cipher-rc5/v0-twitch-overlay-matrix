@@ -1,5 +1,4 @@
 "use client"
-
 import type React from "react"
 import { useState } from "react"
 
@@ -46,7 +45,7 @@ const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ onPermissio
           justify-content: center;
           z-index: 1000;
         }
-        
+
         .permission-modal {
           background: #1a1a1a;
           border: 2px solid #00ff00;
@@ -55,20 +54,20 @@ const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ onPermissio
           text-align: center;
           max-width: 400px;
         }
-        
+
         .modal-icon {
           font-size: 48px;
           margin-bottom: 20px;
           filter: grayscale(1) brightness(2);
         }
-        
+
         .permission-modal h3 {
           color: #ffffff;
           font-family: 'Courier New', monospace;
           font-size: 24px;
           margin-bottom: 15px;
         }
-        
+
         .permission-modal p {
           color: #cccccc;
           font-family: 'Courier New', monospace;
@@ -76,7 +75,7 @@ const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ onPermissio
           margin-bottom: 25px;
           line-height: 1.5;
         }
-        
+
         .permission-button {
           background: #00ff00;
           color: #000000;
@@ -89,12 +88,12 @@ const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ onPermissio
           cursor: pointer;
           transition: all 0.3s ease;
         }
-        
+
         .permission-button:hover:not(:disabled) {
           background: #00cc00;
           transform: translateY(-2px);
         }
-        
+
         .permission-button:disabled {
           opacity: 0.6;
           cursor: not-allowed;
