@@ -1,30 +1,20 @@
-import type React from "react"
-import { type Metadata } from "next"
-import "./globals.css"
+import { type Metadata } from 'next';
+import type React from 'react';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Cipher Twitch Overlay",
-  description: "Responsive animated Twitch streaming overlay for ultrawide monitors",
-    generator: 'v0.app'
-}
+  title: 'Cipher Twitch Overlay',
+  description: 'Responsive animated Twitch streaming overlay for ultrawide monitors',
+  generator: 'ℭ𝔦𝔭𝔥𝔢𝔯'
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <link
-          rel="preload"
-          href="/fonts/Terminess-Nerd-Font-Complete-Mono.ttf"
-          as="font"
-          type="font/ttf"
-          crossOrigin="anonymous"
-        />
+        <link rel='preload' href='/fonts/Terminess-Nerd-Font-Complete-Mono.ttf' as='font' type='font/ttf' crossOrigin='anonymous' />
       </head>
       <body>{children}</body>
     </html>
-  )
+  );
 }

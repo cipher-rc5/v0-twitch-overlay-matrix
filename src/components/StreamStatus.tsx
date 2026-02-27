@@ -1,75 +1,72 @@
-"use client"
-import type React from "react"
-import { useState, useEffect } from "react"
+'use client';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 interface StreamStatusProps {
-  status: "starting" | "live" | "offline"
+  status: 'starting' | 'live' | 'offline';
 }
 
 const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
-  const [animatedText, setAnimatedText] = useState("")
+  const [animatedText, setAnimatedText] = useState('');
 
   const getStatusText = () => {
     switch (status) {
-      case "starting":
-        return "STARTING SOON"
-      case "live":
-        return "LIVE NOW"
-      case "offline":
-        return "OFFLINE"
+      case 'starting':
+        return 'STARTING SOON';
+      case 'live':
+        return 'LIVE NOW';
+      case 'offline':
+        return 'OFFLINE';
       default:
-        return "STARTING SOON"
+        return 'STARTING SOON';
     }
-  }
+  };
 
   const getStatusColor = () => {
     switch (status) {
-      case "live":
-        return "#ffff00"
-      case "starting":
-        return "#ffff00"
-      case "offline":
-        return "#ff0000"
+      case 'live':
+        return '#ffff00';
+      case 'starting':
+        return '#ffff00';
+      case 'offline':
+        return '#ff0000';
       default:
-        return "#ffff00"
+        return '#ffff00';
     }
-  }
+  };
 
   useEffect(() => {
-    const statusText = getStatusText()
-    let currentIndex = 0
-    setAnimatedText("")
+    const statusText = getStatusText();
+    let currentIndex = 0;
+    setAnimatedText('');
 
     const typeInterval = setInterval(() => {
       if (currentIndex <= statusText.length) {
-        setAnimatedText(statusText.slice(0, currentIndex))
-        currentIndex++
+        setAnimatedText(statusText.slice(0, currentIndex));
+        currentIndex++;
       } else {
-        clearInterval(typeInterval)
+        clearInterval(typeInterval);
       }
-    }, 100)
+    }, 100);
 
-    return () => clearInterval(typeInterval)
-  }, [status])
+    return () => clearInterval(typeInterval);
+  }, [status]);
 
   return (
-    <div className="stream-status">
-      <div className="status-label">THE STREAM IS</div>
-      <div className="status-text" style={{ color: getStatusColor() }}>
+    <div className='stream-status'>
+      <div className='status-label'>THE STREAM IS</div>
+      <div className='status-text' style={{ color: getStatusColor() }}>
         {animatedText}
-        <span className="status-cursor">_</span>
+        <span className='status-cursor'>_</span>
       </div>
-      <div className="website">ciphermarket.xyz</div>
+      <div className='website'>ciphermarket.xyz</div>
 
-      <div className="matrix-bg">
-        {[...Array(20)].map((_, i) => (
-          <div key={i} className={`matrix-char matrix-${i}`}>
-            {Math.random() > 0.5 ? "1" : "0"}
-          </div>
-        ))}
+      <div className='matrix-bg'>
+        {[...Array(20)].map((_, i) => <div key={i} className={`matrix-char matrix-${i}`}>{Math.random() > 0.5 ? '1' : '0'}</div>)}
       </div>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .stream-status {
           position: absolute;
           top: 50%;
@@ -96,7 +93,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           font-weight: bold;
           letter-spacing: 4px;
           margin-bottom: 20px;
-          animation: ${status === "live" ? "livePulse" : "statusGlow"} 2s infinite;
+          animation: ${status === 'live' ? 'livePulse' : 'statusGlow'} 2s infinite;
           text-shadow: 0 0 20px currentColor;
           position: relative;
         }
@@ -139,17 +136,15 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
           animation: matrixFall 3s linear infinite;
         }
 
-        ${[...Array(20)]
-          .map(
-            (_, i) => `
+        ${
+          [...Array(20)].map((_, i) => `
           .matrix-${i} {
             left: ${i * 5 + Math.random() * 10}%;
             animation-delay: ${Math.random() * 3}s;
             animation-duration: ${3 + Math.random() * 2}s;
           }
-        `,
-          )
-          .join("")}
+        `).join('')
+        }
 
         @keyframes slideInFromCenter {
           from {
@@ -245,9 +240,10 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
             font-size: 14px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
-  )
-}
+  );
+};
 
-export default StreamStatus
+export default StreamStatus;

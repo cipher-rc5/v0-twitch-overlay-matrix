@@ -1,34 +1,35 @@
-"use client"
-import type React from "react"
+'use client';
+import type React from 'react';
 
 const CornerBrackets: React.FC = () => {
   return (
     <>
       {/* Top Left */}
-      <div className="corner-bracket top-left">
-        <div className="bracket-line horizontal"></div>
-        <div className="bracket-line vertical"></div>
+      <div className='corner-bracket top-left'>
+        <div className='bracket-line horizontal'></div>
+        <div className='bracket-line vertical'></div>
       </div>
 
       {/* Top Right */}
-      <div className="corner-bracket top-right">
-        <div className="bracket-line horizontal"></div>
-        <div className="bracket-line vertical"></div>
+      <div className='corner-bracket top-right'>
+        <div className='bracket-line horizontal'></div>
+        <div className='bracket-line vertical'></div>
       </div>
 
       {/* Bottom Left */}
-      <div className="corner-bracket bottom-left">
-        <div className="bracket-line horizontal"></div>
-        <div className="bracket-line vertical"></div>
+      <div className='corner-bracket bottom-left'>
+        <div className='bracket-line horizontal'></div>
+        <div className='bracket-line vertical'></div>
       </div>
 
       {/* Bottom Right */}
-      <div className="corner-bracket bottom-right">
-        <div className="bracket-line horizontal"></div>
-        <div className="bracket-line vertical"></div>
+      <div className='corner-bracket bottom-right'>
+        <div className='bracket-line horizontal'></div>
+        <div className='bracket-line vertical'></div>
       </div>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .corner-bracket {
           position: absolute;
           width: 120px;
@@ -172,9 +173,10 @@ const CornerBrackets: React.FC = () => {
             height: 50px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </>
-  )
-}
+  );
+};
 
-export default CornerBrackets
+export default CornerBrackets;

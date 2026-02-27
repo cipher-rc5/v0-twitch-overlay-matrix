@@ -1,75 +1,50 @@
-# v0 Twitch Overlay
+# Cipher Twitch Overlay
 
-Responsive, animated Twitch streaming overlay designed for ultrawide monitors (3440x1440) with voice-reactive features
+Production-focused Next.js overlay for OBS with voice-reactive visuals, ultrawide-first layout, and strict TypeScript safety.
 
-## Features
+## Stack
 
-- **Responsive Design**: Scales perfectly from ultrawide (3440x1440) down to mobile
-- **Voice Activity Detection**: Real-time microphone input analysis with visual feedback
-- **Animated Elements**: Smooth transitions, typing effects, and particle animations
-- **Cyberpunk Aesthetic**: Dark theme with green accents and monospace typography
-- **Corner Brackets**: Animated corner elements that frame the stream
-- **Live Status**: Dynamic stream status with typewriter effects
-- **Voice-Reactive Avatar**: Monster character that responds to voice input
+- Runtime and package manager: Bun
+- Framework: Next.js (App Router) + React + TypeScript
+- Styling: Tailwind and component-scoped styles
+- Audio pipeline: Web Audio API (`AnalyserNode`)
+- Formatting: dprint
 
-## Technology Stack
+## Scripts
 
-- **Runtime**: Bun
-- **Framework**: React with TypeScript
-- **Styling**: CSS-in-JS with responsive design
-- **Audio**: Web Audio API for voice detection
-- **Build**: Bun build (no Vite/Webpack)
-- **Formatting**: dprint
-
-## Setup
-
-1. Install dependencies:
 ```bash
-bun install
+bun run dev           # local development server
+bun run build         # production build
+bun run start         # run production build
+bun run typecheck     # strict TypeScript validation
+bun run format        # apply formatting
+bun run format:check  # verify formatting
+bun run check         # typecheck + build + formatting check
 ```
 
-2. Start development server:
+## Local Setup
+
 ```bash
+bun install
 bun run dev
 ```
 
-3. Build for production:
-```bash
-bun run build
-```
+## OBS Setup
 
-4. Format code:
-```bash
-bun run format
-```
+1. Add a Browser Source.
+2. Use your deployed URL or `http://localhost:3000`.
+3. Set width to `3440` and height to `1440`.
+4. Enable source refresh when scene becomes active.
+5. Grant microphone access when prompted to enable voice-reactive effects.
 
-## Usage in OBS
+## Architecture Notes
 
-1. Add a "Browser Source" in OBS
-2. Set URL to your local development server or built version
-3. Set Width: 3440, Height: 1440
-4. Enable "Shutdown source when not visible" and "Refresh browser when scene becomes active"
-5. The overlay will automatically request microphone permissions for voice reactivity
+- Next.js-only runtime model (no parallel standalone React entrypoint).
+- Explicit microphone permission flow with runtime state handling (`checking`, `prompt`, `requesting`, `ready`, `denied`, `error`).
+- Voice analysis lifecycle includes cleanup for animation frames, audio nodes, and browser visibility state.
 
-## Customization
+## Browser Support
 
-- **Colors**: Modify the CSS custom properties in each component
-- **Animations**: Adjust animation durations and easing functions
-- **Voice Sensitivity**: Change the threshold in `useVoiceActivity` hook
-- **Layout**: Modify component positions in the responsive breakpoints
-
-## Components
-
-- `StreamOverlay`: Main container with responsive scaling
-- `CornerBrackets`: Animated corner frame elements
-- `Header`: Cipher branding with typing animation
-- `SideCards`: About Me and Links cards with hover effects
-- `StreamStatus`: Dynamic status display with matrix background
-- `VoiceReactiveAvatar`: Monster character with voice detection
-- `MicrophonePermission`: Permission request modal
-
-## Browser Compatibility
-
-- Chrome/Edge: Full support
-- Firefox: Full support
-- Safari: Limited Web Audio API support
+- Chrome and Edge: full support
+- Firefox: full support
+- Safari: partial support depending on Web Audio and permission behavior

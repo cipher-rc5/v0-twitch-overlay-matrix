@@ -1,38 +1,33 @@
-"use client"
-import type React from "react"
-import { useState } from "react"
+'use client';
+import type React from 'react';
 
 interface MicrophonePermissionProps {
-  onPermissionGranted: () => void
+  state: 'checking' | 'prompt' | 'requesting' | 'denied' | 'error';
+  errorMessage: string | null;
+  onRequestPermission: () => void;
 }
 
-const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ onPermissionGranted }) => {
-  const [isRequesting, setIsRequesting] = useState(false)
-
-  const requestPermission = async () => {
-    setIsRequesting(true)
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: true })
-      onPermissionGranted()
-    } catch (error) {
-      console.error("Microphone permission denied:", error)
-    } finally {
-      setIsRequesting(false)
-    }
-  }
+const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ state, errorMessage, onRequestPermission }) => {
+  const isRequesting = state === 'checking' || state === 'requesting';
+  const title = state === 'denied' ? 'Microphone Access Blocked' : 'Microphone Access Required';
+  const message = errorMessage ??
+    (state === 'denied' ?
+      'Enable microphone permissions in your browser settings, then retry.' :
+      'Enable microphone access for voice-reactive animations.');
 
   return (
-    <div className="mic-permission-overlay">
-      <div className="permission-modal">
-        <div className="modal-icon">🎤</div>
-        <h3>Microphone Access Required</h3>
-        <p>Enable microphone access for voice-reactive animations</p>
-        <button onClick={requestPermission} disabled={isRequesting} className="permission-button">
-          {isRequesting ? "Requesting..." : "Enable Microphone"}
+    <div className='mic-permission-overlay'>
+      <div className='permission-modal'>
+        <div className='modal-icon'>🎤</div>
+        <h3>{title}</h3>
+        <p>{message}</p>
+        <button onClick={onRequestPermission} disabled={isRequesting} className='permission-button'>
+          {isRequesting ? 'Requesting...' : 'Enable Microphone'}
         </button>
       </div>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .mic-permission-overlay {
           position: fixed;
           top: 0;
@@ -98,9 +93,10 @@ const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ onPermissio
           opacity: 0.6;
           cursor: not-allowed;
         }
-      `}</style>
+      `}
+      </style>
     </div>
-  )
-}
+  );
+};
 
-export default MicrophonePermission
+export default MicrophonePermission;

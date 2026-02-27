@@ -1,45 +1,40 @@
-"use client"
-import type React from "react"
-import { useState, useEffect } from "react"
+'use client';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
-  const [displayText, setDisplayText] = useState("")
-  const fullText = "ℭ𝔦𝔭𝔥𝔢𝔯"
+  const [displayText, setDisplayText] = useState('');
+  const fullText = 'ℭ𝔦𝔭𝔥𝔢𝔯';
 
   useEffect(() => {
-    let currentIndex = 0
+    let currentIndex = 0;
     const typingInterval = setInterval(() => {
       if (currentIndex <= fullText.length) {
-        setDisplayText(fullText.slice(0, currentIndex))
-        currentIndex++
+        setDisplayText(fullText.slice(0, currentIndex));
+        currentIndex++;
       } else {
-        clearInterval(typingInterval)
+        clearInterval(typingInterval);
       }
-    }, 200)
+    }, 200);
 
-    return () => clearInterval(typingInterval)
-  }, [])
+    return () => clearInterval(typingInterval);
+  }, []);
 
   return (
-    <div className="header">
-      <div className="cipher-text">
-        <span className="dots">◆◆◆</span>
-        <span className="cipher-name">
+    <div className='header'>
+      <div className='cipher-text'>
+        <span className='dots'>◆◆◆</span>
+        <span className='cipher-name'>
           {displayText}
-          <span className="cursor">|</span>
+          <span className='cursor'>|</span>
         </span>
-        <span className="dots">◆◆◆</span>
+        <span className='dots'>◆◆◆</span>
       </div>
 
-      <div className="particles">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className={`particle particle-${i}`}>
-            ◆
-          </div>
-        ))}
-      </div>
+      <div className='particles'>{[...Array(6)].map((_, i) => <div key={i} className={`particle particle-${i}`}>◆</div>)}</div>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .header {
           position: absolute;
           top: 60px;
@@ -180,9 +175,10 @@ const Header: React.FC = () => {
             gap: 15px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

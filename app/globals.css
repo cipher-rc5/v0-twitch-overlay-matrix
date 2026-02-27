@@ -143,8 +143,7 @@
 
   /* Added overlay container styles */
   html,
-  body,
-  #root {
+  body {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -160,6 +159,7 @@
   font-family: "Terminess", "Courier New", monospace;
   color: #ffffff;
   overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 /* Responsive scaling for different screen sizes */
@@ -182,6 +182,15 @@
 }
 
 @media (max-width: 1920px) {
+  .overlay-container {
+    width: 100vw;
+    height: 100vh;
+    transform-origin: top left;
+    transform: scale(calc(100vw / 3440));
+  }
+}
+
+@media (max-width: 768px) {
   .overlay-container {
     width: 100vw;
     height: 100vh;

@@ -1,5 +1,5 @@
-import StreamOverlay from "../src/components/StreamOverlay"
+import StreamOverlay from '../src/components/StreamOverlay';
 
 export default function Page() {
-  return <StreamOverlay />
+  return <StreamOverlay />;
 }

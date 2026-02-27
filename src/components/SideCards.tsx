@@ -1,43 +1,42 @@
-"use client"
-import type React from "react"
-import { useState } from "react"
+'use client';
+import type React from 'react';
+import { useState } from 'react';
 
 const SideCards: React.FC = () => {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   return (
-    <div className="side-cards">
+    <div className='side-cards'>
       <div
-        className={`card about-card ${hoveredCard === "about" ? "hovered" : ""}`}
-        onMouseEnter={() => setHoveredCard("about")}
-        onMouseLeave={() => setHoveredCard(null)}
-      >
-        <div className="card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="8" r="3" stroke="#ffff00" strokeWidth="2" />
-            <path d="M12 14c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z" stroke="#ffff00" strokeWidth="2" />
+        className={`card about-card ${hoveredCard === 'about' ? 'hovered' : ''}`}
+        onMouseEnter={() => setHoveredCard('about')}
+        onMouseLeave={() => setHoveredCard(null)}>
+        <div className='card-icon'>
+          <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
+            <circle cx='12' cy='8' r='3' stroke='#ffff00' strokeWidth='2' />
+            <path d='M12 14c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z' stroke='#ffff00' strokeWidth='2' />
           </svg>
         </div>
-        <div className="card-text">ABOUT ME</div>
-        <div className="card-border-effect"></div>
+        <div className='card-text'>ABOUT ME</div>
+        <div className='card-border-effect'></div>
       </div>
 
       <div
-        className={`card links-card ${hoveredCard === "links" ? "hovered" : ""}`}
-        onMouseEnter={() => setHoveredCard("links")}
-        onMouseLeave={() => setHoveredCard(null)}
-      >
-        <div className="card-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="#ffff00" strokeWidth="2" />
-            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="#ffff00" strokeWidth="2" />
+        className={`card links-card ${hoveredCard === 'links' ? 'hovered' : ''}`}
+        onMouseEnter={() => setHoveredCard('links')}
+        onMouseLeave={() => setHoveredCard(null)}>
+        <div className='card-icon'>
+          <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
+            <path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71' stroke='#ffff00' strokeWidth='2' />
+            <path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71' stroke='#ffff00' strokeWidth='2' />
           </svg>
         </div>
-        <div className="card-text">LINKS</div>
-        <div className="card-border-effect"></div>
+        <div className='card-text'>LINKS</div>
+        <div className='card-border-effect'></div>
       </div>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .side-cards {
           position: absolute;
           left: 60px;
@@ -163,9 +162,10 @@ const SideCards: React.FC = () => {
             height: 20px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
-  )
-}
+  );
+};
 
-export default SideCards
+export default SideCards;

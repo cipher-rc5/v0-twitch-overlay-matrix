@@ -1,85 +1,75 @@
-"use client"
-import type React from "react"
-import { useVoiceActivity } from "../hooks/useVoiceActivity"
+'use client';
+import type React from 'react';
+import { useVoiceActivity } from '../hooks/useVoiceActivity';
 
 interface VoiceReactiveAvatarProps {
-  isLive: boolean
+  isLive: boolean;
+  stream: MediaStream | null;
 }
 
-const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => {
-  const {
-    isActive: isVoiceActive,
-    volume: audioLevel,
-    frequencyData,
-  } = useVoiceActivity({
+const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive, stream }) => {
+  const { isActive: isVoiceActive, volume: audioLevel, frequencyData } = useVoiceActivity({
+    stream,
     threshold: 25,
     smoothingTimeConstant: 0.8,
     fftSize: 512,
-  })
+    sampleRate: 30
+  });
 
   return (
-    <div className="voice-avatar">
-      <div className="amplitude-visualization">
-        <div className="amplitude-bars">
+    <div className='voice-avatar'>
+      <div className='amplitude-visualization'>
+        <div className='amplitude-bars'>
           {[...Array(48)].map((_, i) => {
-            const dataIndex = Math.floor((i / 48) * frequencyData.length)
-            const amplitude = isVoiceActive ? frequencyData[dataIndex] || 0 : 0
-            const height = Math.max(8, (amplitude / 255) * 100)
+            const dataIndex = Math.floor((i / 48) * frequencyData.length);
+            const amplitude = isVoiceActive ? frequencyData[dataIndex] || 0 : 0;
+            const height = Math.max(8, (amplitude / 255) * 100);
 
             return (
               <div
                 key={i}
-                className="amplitude-bar"
+                className='amplitude-bar'
                 style={{
                   height: `${height}%`,
-                  background:
-                    amplitude > 0
-                      ? `hsl(${60 + amplitude * 0.3}, 100%, ${50 + amplitude * 0.2}%)`
-                      : "rgba(255, 255, 0, 0.1)",
-                }}
-              />
-            )
+                  background: amplitude > 0 ? `hsl(${60 + amplitude * 0.3}, 100%, ${50 + amplitude * 0.2}%)` : 'rgba(255, 255, 0, 0.1)'
+                }} />
+            );
           })}
         </div>
-        <div className="amplitude-level">{isVoiceActive ? `${Math.round(audioLevel)}%` : "SILENT"}</div>
+        <div className='amplitude-level'>{isVoiceActive ? `${Math.round(audioLevel)}%` : 'SILENT'}</div>
       </div>
 
-      <div className="avatar-section">
+      <div className='avatar-section'>
         {isLive && (
-          <div className="live-button">
+          <div className='live-button'>
             <span>LIVE</span>
-            <div className="live-dot"></div>
+            <div className='live-dot'></div>
           </div>
         )}
 
-        <div className={`avatar-container ${isVoiceActive ? "voice-active" : ""}`}>
+        <div className={`avatar-container ${isVoiceActive ? 'voice-active' : ''}`}>
           <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/monster_pfp.gif-r8E4BtKKAsfd7s0ctEHgu8aQVvIcNh.jpeg"
-            alt="Cipher Avatar"
-            className="avatar-image"
-          />
+            src='https://hebbkx1anhila5yf.public.blob.vercel-storage.com/monster_pfp.gif-r8E4BtKKAsfd7s0ctEHgu8aQVvIcNh.jpeg'
+            alt='Cipher Avatar'
+            className='avatar-image' />
 
-          <div className={`voice-ring ${isVoiceActive ? "active" : ""}`}>
-            <div
-              className="ring-pulse"
-              style={{
-                animationDuration: `${Math.max(0.5, 2 - audioLevel / 50)}s`,
-              }}
-            ></div>
+          <div className={`voice-ring ${isVoiceActive ? 'active' : ''}`}>
+            <div className='ring-pulse' style={{ animationDuration: `${Math.max(0.5, 2 - audioLevel / 50)}s` }}></div>
           </div>
 
-          <div className="avatar-corners">
-            <div className="corner-accent top-left"></div>
-            <div className="corner-accent top-right"></div>
-            <div className="corner-accent bottom-left"></div>
-            <div className="corner-accent bottom-right"></div>
+          <div className='avatar-corners'>
+            <div className='corner-accent top-left'></div>
+            <div className='corner-accent top-right'></div>
+            <div className='corner-accent bottom-left'></div>
+            <div className='corner-accent bottom-right'></div>
           </div>
         </div>
 
-        <div className="status-text">{isVoiceActive ? "SPEAKING" : "LISTENING"}</div>
+        <div className='status-text'>{isVoiceActive ? 'SPEAKING' : 'LISTENING'}</div>
       </div>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .voice-avatar {
           position: absolute;
           bottom: 60px;
@@ -211,7 +201,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
           height: 100%;
           object-fit: cover;
           /* Made filter effects more subtle */
-          filter: ${isVoiceActive ? "brightness(1.1) contrast(1.05) saturate(1.05)" : "brightness(1)"};
+          filter: ${isVoiceActive ? 'brightness(1.1) contrast(1.05) saturate(1.05)' : 'brightness(1)'};
           transition: filter 0.3s ease;
         }
 
@@ -296,7 +286,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
         .status-text {
           font-family: 'Terminess', 'Courier New', monospace;
           font-size: 12px;
-          color: ${isVoiceActive ? "#ffff00" : "#888888"};
+          color: ${isVoiceActive ? '#ffff00' : '#888888'};
           font-weight: bold;
           letter-spacing: 1px;
           transition: all 0.3s ease;
@@ -414,9 +404,10 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive }) => 
             font-size: 10px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
-  )
-}
+  );
+};
 
-export default VoiceReactiveAvatar
+export default VoiceReactiveAvatar;
