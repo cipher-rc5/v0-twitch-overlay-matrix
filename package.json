@@ -2,6 +2,7 @@
   "name": "v0-twitch-overlay-matrix",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "bun@1.2.0",
   "scripts": {
     "build": "next build",
     "check": "bun run typecheck && bun run build && dprint check .",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.2.2",
+    "@types/node": "25.5.2",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "postcss": "8.5.8",
