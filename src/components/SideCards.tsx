@@ -13,8 +13,12 @@ const SideCards: React.FC = () => {
         onMouseLeave={() => setHoveredCard(null)}>
         <div className='card-icon'>
           <svg width='24' height='24' viewBox='0 0 24 24' fill='none'>
-            <circle cx='12' cy='8' r='3' stroke='#ffff00' strokeWidth='2' />
-            <path d='M12 14c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z' stroke='#ffff00' strokeWidth='2' />
+            <circle cx='12' cy='8' r='3' stroke='#ffff00' strokeWidth='2' suppressHydrationWarning />
+            <path
+              d='M12 14c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z'
+              stroke='#ffff00'
+              strokeWidth='2'
+              suppressHydrationWarning />
           </svg>
         </div>
         <div className='card-text'>ABOUT ME</div>
@@ -30,11 +34,13 @@ const SideCards: React.FC = () => {
             <path
               d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'
               stroke='#ffff00'
-              strokeWidth='2' />
+              strokeWidth='2'
+              suppressHydrationWarning />
             <path
               d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'
               stroke='#ffff00'
-              strokeWidth='2' />
+              strokeWidth='2'
+              suppressHydrationWarning />
           </svg>
         </div>
         <div className='card-text'>LINKS</div>
