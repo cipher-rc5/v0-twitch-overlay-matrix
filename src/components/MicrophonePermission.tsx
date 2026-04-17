@@ -7,7 +7,9 @@ interface MicrophonePermissionProps {
   onRequestPermission: () => void;
 }
 
-const MicrophonePermission: React.FC<MicrophonePermissionProps> = ({ state, errorMessage, onRequestPermission }) => {
+const MicrophonePermission: React.FC<MicrophonePermissionProps> = (
+  { state, errorMessage, onRequestPermission }
+) => {
   const isRequesting = state === 'checking' || state === 'requesting';
   const title = state === 'denied' ? 'Microphone Access Blocked' : 'Microphone Access Required';
   const message = errorMessage ??

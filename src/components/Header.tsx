@@ -1,23 +1,24 @@
 'use client';
+import { Duration, Effect, Fiber } from 'effect';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 
+const FULL_TEXT = 'ℭ𝔦𝔭𝔥𝔢𝔯';
+
 const Header: React.FC = () => {
   const [displayText, setDisplayText] = useState('');
-  const fullText = 'ℭ𝔦𝔭𝔥𝔢𝔯';
 
   useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
+    const fiber = Effect.runFork(Effect.gen(function*() {
+      for (let i = 1;i <= FULL_TEXT.length;i++) {
+        yield* Effect.sleep(Duration.millis(200));
+        yield* Effect.sync(() => setDisplayText(FULL_TEXT.slice(0, i)));
       }
-    }, 200);
+    }));
 
-    return () => clearInterval(typingInterval);
+    return () => {
+      Effect.runFork(Fiber.interrupt(fiber));
+    };
   }, []);
 
   return (
@@ -31,7 +32,9 @@ const Header: React.FC = () => {
         <span className='dots'>◆◆◆</span>
       </div>
 
-      <div className='particles'>{[...Array(6)].map((_, i) => <div key={i} className={`particle particle-${i}`}>◆</div>)}</div>
+      <div className='particles'>
+        {[...Array(6)].map((_, i) => <div key={i} className={`particle particle-${i}`}>◆</div>)}
+      </div>
 
       <style jsx>
         {`

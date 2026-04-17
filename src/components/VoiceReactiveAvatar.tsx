@@ -31,7 +31,9 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive, strea
                 className='amplitude-bar'
                 style={{
                   height: `${height}%`,
-                  background: amplitude > 0 ? `hsl(${60 + amplitude * 0.3}, 100%, ${50 + amplitude * 0.2}%)` : 'rgba(255, 255, 0, 0.1)'
+                  background: amplitude > 0 ?
+                    `hsl(${60 + amplitude * 0.3}, 100%, ${50 + amplitude * 0.2}%)` :
+                    'rgba(255, 255, 0, 0.1)'
                 }} />
             );
           })}
@@ -54,7 +56,10 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive, strea
             className='avatar-image' />
 
           <div className={`voice-ring ${isVoiceActive ? 'active' : ''}`}>
-            <div className='ring-pulse' style={{ animationDuration: `${Math.max(0.5, 2 - audioLevel / 50)}s` }}></div>
+            <div
+              className='ring-pulse'
+              style={{ animationDuration: `${Math.max(0.5, 2 - audioLevel / 50)}s` }}>
+            </div>
           </div>
 
           <div className='avatar-corners'>

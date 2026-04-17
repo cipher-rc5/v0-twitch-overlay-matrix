@@ -1,6 +1,8 @@
 'use client';
+import { Effect, Fiber } from 'effect';
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { acquireStream, queryPermissionStatus } from '../lib/microphone';
 import CornerBrackets from './CornerBrackets';
 import Header from './Header';
 import MatrixBackground from './MatrixBackground';
@@ -21,7 +23,6 @@ const StreamOverlay: React.FC = () => {
   const permissionStatusRef = useRef<PermissionStatus | null>(null);
 
   useEffect(() => {
-    // Simulate stream status changes for demo
     const timer = setTimeout(() => {
       setStreamStatus('live');
       setIsLive(true);
@@ -47,83 +48,87 @@ const StreamOverlay: React.FC = () => {
     }
   }, []);
 
-  const activateMicrophone = useCallback(async () => {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      setMicrophoneState('error');
-      setMicrophoneError('Microphone access is not supported in this browser.');
-      return;
-    }
-
+  const activateMicrophone = useCallback(() => {
     setMicrophoneError(null);
     setMicrophoneState('requesting');
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-      });
-
-      releaseMicrophoneStream();
-      microphoneStreamRef.current = stream;
-      setMicrophoneStream(stream);
-      setMicrophoneState('ready');
-    } catch {
-      setMicrophoneState('denied');
-      setMicrophoneError('Microphone access was denied. Enable permission in your browser and try again.');
-    }
+    Effect.runFork(acquireStream.pipe(
+      Effect.tap((stream) =>
+        Effect.sync(() => {
+          releaseMicrophoneStream();
+          microphoneStreamRef.current = stream;
+          setMicrophoneStream(stream);
+          setMicrophoneState('ready');
+        })
+      ),
+      Effect.catchTag('MicrophoneNotSupported', () =>
+        Effect.sync(() => {
+          setMicrophoneState('error');
+          setMicrophoneError('Microphone access is not supported in this browser.');
+        })),
+      Effect.catchTag('MicrophoneDenied', (e) =>
+        Effect.sync(() => {
+          setMicrophoneState('denied');
+          setMicrophoneError(e.message);
+        }))
+    ));
   }, [releaseMicrophoneStream]);
 
   useEffect(() => {
     let isMounted = true;
 
-    const initializePermissionState = async () => {
+    const program = Effect.gen(function*() {
       if (!navigator.mediaDevices?.getUserMedia) {
-        setMicrophoneState('error');
-        setMicrophoneError('Microphone access is not supported in this browser.');
+        yield* Effect.sync(() => {
+          setMicrophoneState('error');
+          setMicrophoneError('Microphone access is not supported in this browser.');
+        });
         return;
       }
 
-      if (!navigator.permissions?.query) {
-        setMicrophoneState('prompt');
-        return;
-      }
+      yield* queryPermissionStatus.pipe(
+        Effect.tap((permission) =>
+          Effect.sync(() => {
+            if (!isMounted) return;
+            permissionStatusRef.current = permission;
 
-      try {
-        const permission = await navigator.permissions.query({ name: 'microphone' as PermissionName });
-        if (!isMounted) return;
+            const sync = () => {
+              if (!isMounted) return;
 
-        permissionStatusRef.current = permission;
+              if (permission.state === 'granted') {
+                if (!microphoneStreamRef.current) {
+                  activateMicrophone();
+                } else {
+                  setMicrophoneState('ready');
+                }
+                return;
+              }
 
-        const syncFromPermission = () => {
-          if (permission.state === 'granted') {
-            if (microphoneStreamRef.current) {
-              setMicrophoneState('ready');
-              return;
-            }
+              if (permission.state === 'denied') {
+                releaseMicrophoneStream();
+                setMicrophoneState('denied');
+                return;
+              }
 
-            void activateMicrophone();
-            return;
-          }
+              setMicrophoneState('prompt');
+            };
 
-          if (permission.state === 'denied') {
-            releaseMicrophoneStream();
-            setMicrophoneState('denied');
-            return;
-          }
+            permission.onchange = sync;
+            sync();
+          })
+        ),
+        Effect.catchTag('PermissionQueryNotSupported', () =>
+          Effect.sync(() => {
+            if (isMounted) setMicrophoneState('prompt');
+          }))
+      );
+    });
 
-          setMicrophoneState('prompt');
-        };
-
-        permission.onchange = syncFromPermission;
-        syncFromPermission();
-      } catch {
-        setMicrophoneState('prompt');
-      }
-    };
-
-    void initializePermissionState();
+    const fiber = Effect.runFork(program);
 
     return () => {
       isMounted = false;
+      Effect.runFork(Fiber.interrupt(fiber));
       if (permissionStatusRef.current) {
         permissionStatusRef.current.onchange = null;
         permissionStatusRef.current = null;
@@ -143,7 +148,10 @@ const StreamOverlay: React.FC = () => {
       <VoiceReactiveAvatar isLive={isLive} stream={microphoneStream} />
 
       {microphoneState !== 'ready' && (
-        <MicrophonePermission state={microphoneState} errorMessage={microphoneError} onRequestPermission={activateMicrophone} />
+        <MicrophonePermission
+          state={microphoneState}
+          errorMessage={microphoneError}
+          onRequestPermission={activateMicrophone} />
       )}
     </div>
   );

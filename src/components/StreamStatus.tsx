@@ -1,4 +1,5 @@
 'use client';
+import { Duration, Effect, Fiber } from 'effect';
 import type React from 'react';
 import { useEffect, useState } from 'react';
 
@@ -6,63 +7,86 @@ interface StreamStatusProps {
   status: 'starting' | 'live' | 'offline';
 }
 
+interface MatrixChar {
+  char: string;
+  left: number;
+  delay: number;
+  duration: number;
+}
+
+const MATRIX_COUNT = 20;
+
+const deterministicChars: MatrixChar[] = Array.from(
+  { length: MATRIX_COUNT },
+  (_, i) => ({ char: i % 2 === 0 ? '1' : '0', left: i * 5, delay: 0, duration: 3 })
+);
+
+const getStatusText = (s: StreamStatusProps['status']): string => {
+  switch (s) {
+    case 'starting':
+      return 'STARTING SOON';
+    case 'live':
+      return 'LIVE NOW';
+    case 'offline':
+      return 'OFFLINE';
+  }
+};
+
+const getStatusColor = (s: StreamStatusProps['status']): string => {
+  switch (s) {
+    case 'live':
+    case 'starting':
+      return '#ffff00';
+    case 'offline':
+      return '#ff0000';
+  }
+};
+
 const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
   const [animatedText, setAnimatedText] = useState('');
-
-  const getStatusText = () => {
-    switch (status) {
-      case 'starting':
-        return 'STARTING SOON';
-      case 'live':
-        return 'LIVE NOW';
-      case 'offline':
-        return 'OFFLINE';
-      default:
-        return 'STARTING SOON';
-    }
-  };
-
-  const getStatusColor = () => {
-    switch (status) {
-      case 'live':
-        return '#ffff00';
-      case 'starting':
-        return '#ffff00';
-      case 'offline':
-        return '#ff0000';
-      default:
-        return '#ffff00';
-    }
-  };
+  const [matrixChars, setMatrixChars] = useState<MatrixChar[]>(deterministicChars);
 
   useEffect(() => {
-    const statusText = getStatusText();
-    let currentIndex = 0;
+    setMatrixChars(
+      Array.from(
+        { length: MATRIX_COUNT },
+        (_, i) => ({
+          char: Math.random() > 0.5 ? '1' : '0',
+          left: i * 5 + Math.random() * 10,
+          delay: Math.random() * 3,
+          duration: 3 + Math.random() * 2
+        })
+      )
+    );
+  }, []);
+
+  useEffect(() => {
+    const statusText = getStatusText(status);
     setAnimatedText('');
 
-    const typeInterval = setInterval(() => {
-      if (currentIndex <= statusText.length) {
-        setAnimatedText(statusText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typeInterval);
+    const fiber = Effect.runFork(Effect.gen(function*() {
+      for (let i = 1;i <= statusText.length;i++) {
+        yield* Effect.sleep(Duration.millis(100));
+        yield* Effect.sync(() => setAnimatedText(statusText.slice(0, i)));
       }
-    }, 100);
+    }));
 
-    return () => clearInterval(typeInterval);
+    return () => {
+      Effect.runFork(Fiber.interrupt(fiber));
+    };
   }, [status]);
 
   return (
     <div className='stream-status'>
       <div className='status-label'>THE STREAM IS</div>
-      <div className='status-text' style={{ color: getStatusColor() }}>
+      <div className='status-text' style={{ color: getStatusColor(status) }}>
         {animatedText}
         <span className='status-cursor'>_</span>
       </div>
       <div className='website'>ciphermarket.xyz</div>
 
       <div className='matrix-bg'>
-        {[...Array(20)].map((_, i) => <div key={i} className={`matrix-char matrix-${i}`}>{Math.random() > 0.5 ? '1' : '0'}</div>)}
+        {matrixChars.map((mc, i) => <div key={i} className={`matrix-char matrix-${i}`}>{mc.char}</div>)}
       </div>
 
       <style jsx>
@@ -137,11 +161,11 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
         }
 
         ${
-          [...Array(20)].map((_, i) => `
+          matrixChars.map((mc, i) => `
           .matrix-${i} {
-            left: ${i * 5 + Math.random() * 10}%;
-            animation-delay: ${Math.random() * 3}s;
-            animation-duration: ${3 + Math.random() * 2}s;
+            left: ${mc.left}%;
+            animation-delay: ${mc.delay}s;
+            animation-duration: ${mc.duration}s;
           }
         `).join('')
         }

@@ -1,8 +1,8 @@
 {
-  "name": "v0-twitch-overlay-matrix",
-  "version": "0.1.0",
+  "name": "twitch-overlay-matrix",
+  "version": "0.2.0",
   "private": true,
-  "packageManager": "bun@1.2.0",
+  "packageManager": "bun@1.3.12",
   "scripts": {
     "build": "next build",
     "check": "bun run typecheck && bun run build && dprint check .",
@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "effect": "3.21.0",
     "next": "16.2.4",
     "react": "19.2.5",
     "react-dom": "19.2.5"
