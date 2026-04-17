@@ -79,7 +79,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
   return (
     <div className='stream-status'>
       <div className='status-label'>THE STREAM IS</div>
-      <div className='status-text' style={{ color: getStatusColor(status) }}>
+      <div className='status-text' style={{ color: getStatusColor(status) }} suppressHydrationWarning>
         {animatedText}
         <span className='status-cursor'>_</span>
       </div>

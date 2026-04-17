@@ -29,6 +29,7 @@ const VoiceReactiveAvatar: React.FC<VoiceReactiveAvatarProps> = ({ isLive, strea
               <div
                 key={i}
                 className='amplitude-bar'
+                suppressHydrationWarning
                 style={{
                   height: `${height}%`,
                   background: amplitude > 0 ?
