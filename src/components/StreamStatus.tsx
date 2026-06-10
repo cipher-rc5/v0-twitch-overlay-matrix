@@ -83,7 +83,7 @@ const StreamStatus: React.FC<StreamStatusProps> = ({ status }) => {
         {animatedText}
         <span className='status-cursor'>_</span>
       </div>
-      <div className='website'>ciphermarket.xyz</div>
+      <div className='website'>ciphercloud.xyz</div>
 
       <div className='matrix-bg'>
         {matrixChars.map((mc, i) => <div key={i} className={`matrix-char matrix-${i}`}>{mc.char}</div>)}
