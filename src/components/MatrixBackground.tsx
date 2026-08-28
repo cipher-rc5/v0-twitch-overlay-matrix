@@ -22,23 +22,37 @@ const MatrixBackground: React.FC<MatrixBackgroundProps> = (
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    canvas.width = 3440;
-    canvas.height = 1440;
+    let cssWidth = 0;
+    let cssHeight = 0;
+    let drops: number[] = [];
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      cssWidth = rect.width || canvas.clientWidth || window.innerWidth;
+      cssHeight = rect.height || canvas.clientHeight || window.innerHeight;
+
+      canvas.width = Math.max(1, Math.floor(cssWidth * dpr));
+      canvas.height = Math.max(1, Math.floor(cssHeight * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const columns = Math.max(1, Math.floor(cssWidth / fontSize));
+      const next: number[] = [];
+      for (let i = 0;i < columns;i++) {
+        next[i] = drops[i] ?? (Math.random() * cssHeight) / fontSize;
+      }
+      drops = next;
+    };
 
     const chars =
       'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?';
     const charArray = chars.split('');
 
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops: number[] = [];
-
-    for (let i = 0;i < columns;i++) {
-      drops[i] = (Math.random() * canvas.height) / fontSize;
-    }
+    resize();
 
     const draw = () => {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, cssWidth, cssHeight);
 
       ctx.fillStyle = color;
       ctx.font = `${fontSize}px 'Terminess', 'Courier New', monospace`;
@@ -58,11 +72,11 @@ const MatrixBackground: React.FC<MatrixBackgroundProps> = (
         ctx.fillText(char, x, y);
         ctx.shadowBlur = 0;
 
-        if (y > canvas.height && Math.random() > 0.975) {
+        if (y > cssHeight && Math.random() > 0.975) {
           drops[i] = 0;
+        } else {
+          drops[i] = currentDrop + 1;
         }
-
-        drops[i] = currentDrop + 1;
       }
     };
 
@@ -79,9 +93,11 @@ const MatrixBackground: React.FC<MatrixBackgroundProps> = (
       };
 
       animFrameId = requestAnimationFrame(animate);
+      window.addEventListener('resize', resize);
 
       return Effect.sync(() => {
         if (animFrameId !== null) cancelAnimationFrame(animFrameId);
+        window.removeEventListener('resize', resize);
       });
     }));
 
